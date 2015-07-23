@@ -1,0 +1,452 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions targetNamespace="http://wschatserver" xmlns:apachesoap="http://xml.apache.org/xml-soap" xmlns:impl="http://wschatserver" xmlns:intf="http://wschatserver" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:wsdlsoap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+<!--WSDL created by Apache Axis version: 1.4
+Built on Apr 22, 2006 (06:55:48 PDT)-->
+ <wsdl:types>
+  <schema elementFormDefault="qualified" targetNamespace="http://wschatserver" xmlns="http://www.w3.org/2001/XMLSchema">
+   <import namespace="http://xml.apache.org/xml-soap"/>
+   <element name="join">
+    <complexType>
+     <sequence>
+      <element name="id" type="xsd:int"/>
+      <element name="username" type="xsd:string"/>
+      <element name="joinMessage" type="xsd:string"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="joinResponse">
+    <complexType>
+     <sequence>
+      <element name="joinReturn" type="xsd:int"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="listen">
+    <complexType>
+     <sequence>
+      <element name="id" type="xsd:int"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="listenResponse">
+    <complexType>
+     <sequence>
+      <element name="listenReturn" type="xsd:string"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="leave">
+    <complexType>
+     <sequence>
+      <element name="id" type="xsd:int"/>
+      <element name="username" type="xsd:string"/>
+      <element name="leavemessage" type="xsd:string"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="leaveResponse">
+    <complexType/>
+   </element>
+   <element name="talk">
+    <complexType>
+     <sequence>
+      <element name="id" type="xsd:int"/>
+      <element name="message" type="xsd:string"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="talkResponse">
+    <complexType/>
+   </element>
+   <element name="privateMsg">
+    <complexType>
+     <sequence>
+      <element name="id" type="xsd:int"/>
+      <element name="username" type="xsd:string"/>
+      <element name="receiverUsername" type="xsd:string"/>
+      <element name="message" type="xsd:string"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="privateMsgResponse">
+    <complexType/>
+   </element>
+   <element name="getUsernames">
+    <complexType/>
+   </element>
+   <element name="getUsernamesResponse">
+    <complexType>
+     <sequence>
+      <element name="getUsernamesReturn" type="apachesoap:Map"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="getUserCount">
+    <complexType/>
+   </element>
+   <element name="getUserCountResponse">
+    <complexType>
+     <sequence>
+      <element name="getUserCountReturn" type="xsd:int"/>
+     </sequence>
+    </complexType>
+   </element>
+  </schema>
+  <schema elementFormDefault="qualified" targetNamespace="http://xml.apache.org/xml-soap" xmlns="http://www.w3.org/2001/XMLSchema">
+   <complexType name="mapItem">
+    <sequence>
+     <element name="key" nillable="true" type="xsd:anyType"/>
+     <element name="value" nillable="true" type="xsd:anyType"/>
+    </sequence>
+   </complexType>
+   <complexType name="Map">
+    <sequence>
+     <element maxOccurs="unbounded" minOccurs="0" name="item" type="apachesoap:mapItem"/>
+    </sequence>
+   </complexType>
+  </schema>
+ </wsdl:types>
+
+   <wsdl:message name="leaveResponse">
+
+      <wsdl:part element="impl:leaveResponse" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="privateMsgRequest">
+
+      <wsdl:part element="impl:privateMsg" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="talkResponse">
+
+      <wsdl:part element="impl:talkResponse" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="joinRequest">
+
+      <wsdl:part element="impl:join" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="listenRequest">
+
+      <wsdl:part element="impl:listen" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="listenResponse">
+
+      <wsdl:part element="impl:listenResponse" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="getUserCountResponse">
+
+      <wsdl:part element="impl:getUserCountResponse" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="joinResponse">
+
+      <wsdl:part element="impl:joinResponse" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="talkRequest">
+
+      <wsdl:part element="impl:talk" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="getUsernamesResponse">
+
+      <wsdl:part element="impl:getUsernamesResponse" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="getUserCountRequest">
+
+      <wsdl:part element="impl:getUserCount" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="privateMsgResponse">
+
+      <wsdl:part element="impl:privateMsgResponse" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="leaveRequest">
+
+      <wsdl:part element="impl:leave" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="getUsernamesRequest">
+
+      <wsdl:part element="impl:getUsernames" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:portType name="ChatServer">
+
+      <wsdl:operation name="join">
+
+         <wsdl:input message="impl:joinRequest" name="joinRequest">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:joinResponse" name="joinResponse">
+
+       </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="listen">
+
+         <wsdl:input message="impl:listenRequest" name="listenRequest">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:listenResponse" name="listenResponse">
+
+       </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="leave">
+
+         <wsdl:input message="impl:leaveRequest" name="leaveRequest">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:leaveResponse" name="leaveResponse">
+
+       </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="talk">
+
+         <wsdl:input message="impl:talkRequest" name="talkRequest">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:talkResponse" name="talkResponse">
+
+       </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="privateMsg">
+
+         <wsdl:input message="impl:privateMsgRequest" name="privateMsgRequest">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:privateMsgResponse" name="privateMsgResponse">
+
+       </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getUsernames">
+
+         <wsdl:input message="impl:getUsernamesRequest" name="getUsernamesRequest">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:getUsernamesResponse" name="getUsernamesResponse">
+
+       </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getUserCount">
+
+         <wsdl:input message="impl:getUserCountRequest" name="getUserCountRequest">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:getUserCountResponse" name="getUserCountResponse">
+
+       </wsdl:output>
+
+      </wsdl:operation>
+
+   </wsdl:portType>
+
+   <wsdl:binding name="ChatServerSoapBinding" type="impl:ChatServer">
+
+      <wsdlsoap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+
+      <wsdl:operation name="join">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="joinRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="joinResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="listen">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="listenRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="listenResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="leave">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="leaveRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="leaveResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="talk">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="talkRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="talkResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="privateMsg">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="privateMsgRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="privateMsgResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getUsernames">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="getUsernamesRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="getUsernamesResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getUserCount">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="getUserCountRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="getUserCountResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+   </wsdl:binding>
+
+   <wsdl:service name="ChatServerService">
+
+      <wsdl:port binding="impl:ChatServerSoapBinding" name="ChatServer">
+
+         <wsdlsoap:address location="http://localhost:8080/ChatServer/services/ChatServer"/>
+
+      </wsdl:port>
+
+   </wsdl:service>
+
+</wsdl:definitions>
