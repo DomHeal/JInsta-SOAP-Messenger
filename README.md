@@ -24,7 +24,8 @@ Features
 - No Empty Messages
 - No Illegal Characters
 - No Duplicate Usernames
+- Coloured Messages
 
 Future Implementations
 ------------------------------------
-- Coloured Messages
+- ~~Coloured Messages~~ (Added)
