@@ -1,5 +1,6 @@
 package wschatserverGUI;
 
+import java.awt.Color;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.util.HashMap;
@@ -9,6 +10,13 @@ import javax.swing.JFrame;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JTextArea;
+import javax.swing.JTextPane;
+import javax.swing.text.MutableAttributeSet;
+import javax.swing.text.SimpleAttributeSet;
+import javax.swing.text.Style;
+import javax.swing.text.StyleConstants;
+import javax.swing.text.StyledDocument;
+
 import wschatserver.ChatServer;
 
 public class ChatListener extends Thread {
@@ -23,15 +31,23 @@ public class ChatListener extends Thread {
 	public static final String CONNECTED_TITLE = "Chat Client - Connected - Users Online: ";
 	private long userCountCurrent;
 	private JFrame frame;
-	DefaultListModel<String> model = new DefaultListModel<String>();
+	private DefaultListModel<String> model = new DefaultListModel<String>();
+	private StyledDocument doc;
+	private JTextPane textPane;
+	private SimpleAttributeSet pmRecieveATT = new SimpleAttributeSet();
+	private SimpleAttributeSet pmSendATT = new SimpleAttributeSet();
+	
 
-	ChatListener(JFrame frame, JTextArea other, int id, String username, ChatServer service)
+	ChatListener(JFrame frame, StyledDocument doc, JTextPane textPane, int id, String username, ChatServer service)
 			throws IOException {
-		otherText = other;
+		this.doc = doc;
 		this.id = id;
 		this.service = service;
 		this.username = username;
 		this.frame = frame;
+		this.textPane = textPane;
+		
+	
 	}
 
 	public void run() {
@@ -52,7 +68,21 @@ public class ChatListener extends Thread {
 				}
 				String newText = service.listen(id);
 				if (!newText.equals("")) {
-					otherText.append(newText + "\n");
+					if (newText.startsWith("[PM]")){
+						
+						 pmRecieveATT.addAttribute(StyleConstants.CharacterConstants.Foreground, new Color(142, 68, 173));
+						 
+						 doc.insertString(doc.getLength(), newText + "\n", pmRecieveATT );
+						 
+					} else if (newText.startsWith("[YOU]")){
+						
+						pmSendATT.addAttribute(StyleConstants.CharacterConstants.Foreground, new Color(22, 160, 133));
+						doc.insertString(doc.getLength(), newText + "\n", pmSendATT );
+					}
+					
+					else{
+						doc.insertString(doc.getLength(), newText + "\n", null );
+					}
 				}
 				Thread.sleep(1000);
 			} catch (InterruptedException x) {

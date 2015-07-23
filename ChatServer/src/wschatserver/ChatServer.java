@@ -86,14 +86,14 @@ public class ChatServer {
 				// Takes receieverUsername and finds its value
 				Integer i = userList.get(receiverUsername);
 				// Construct the message to display as string
-				String val = "PM from " + username + serverList.get(i) + message;
+				String val = "[PM] " + username + serverList.get(i) + message;
 				// Display to receiver
 				serverList.set(i, val);
 
 				// Takes senderUsername and finds its value
 				Integer y = userList.get(username);
 				// Construct the message to display as string
-				String vax = "PM sent to " + receiverUsername + serverList.get(y) + message;
+				String vax = "[YOU] " + receiverUsername + serverList.get(y) + message;
 				// Display to sender
 				serverList.set(y, vax);
 			} catch (Exception e) {

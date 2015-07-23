@@ -14,7 +14,11 @@ import java.awt.BorderLayout;
 import java.awt.SystemColor;
 import java.awt.Toolkit;
 import java.awt.Font;
+import java.awt.ScrollPane;
+
 import javax.swing.border.TitledBorder;
+import javax.swing.text.BadLocationException;
+import javax.swing.text.StyledDocument;
 
 import com.sun.prism.Image;
 
@@ -25,10 +29,8 @@ public class ChatGUI {
 	/* Variables */
 	public JFrame frame;
 	private JTextArea myText;
-	private static JTextArea otherText;
 	private static JTextField usernameText;
 	private JScrollPane myTextScroll;
-	private JScrollPane otherTextScroll;
 	private static ChatListener otherTextThread;
 	private String textString = "";
 	private JButton connectBtn;
@@ -45,6 +47,8 @@ public class ChatGUI {
 	private static final int HOR_SIZE_INPUT = 500;
 	private static final int VER_SIZE_INPUT = 50;
 
+	private static final int MAX_USERNAME_LENGTH = 12;
+
 	public static ChatServer service;
 	public static Remote port;
 	private int id;
@@ -54,6 +58,7 @@ public class ChatGUI {
 	private static JList<String> userList;
 
 	private final int USERNAME_TAKEN = -1;
+	private JTextPane textPane;
 
 	/* Creates GUI */
 	/**
@@ -64,7 +69,7 @@ public class ChatGUI {
 		frame = new JFrame("Chat Client");
 
 		usernameLbl = new JLabel("Username");
-		usernameText = new JTextField(15);
+		usernameText = new JTextField(12);
 		connectBtn = new JButton("Connect");
 		disconnectBtn = new JButton("Disconnect");
 		disconnectBtn.setEnabled(false);
@@ -86,19 +91,13 @@ public class ChatGUI {
 		westPanel.setMinimumSize(new Dimension(200, 200));
 		westPanel.setPreferredSize(new Dimension(100, 200));
 
-		otherText = new JTextArea();
-		otherText.setFont(new Font("Calibri", Font.PLAIN, 14));
-		otherText.setLineWrap(true);
-
-		otherTextScroll = new JScrollPane(otherText);
-		otherText.setBackground(new Color(255, 255, 255));
-		otherTextScroll.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
-		otherTextScroll.setMaximumSize(new Dimension(HOR_SIZE, VER_SIZE));
-		otherTextScroll.setMinimumSize(new Dimension(HOR_SIZE, VER_SIZE));
-		otherTextScroll.setPreferredSize(new Dimension(HOR_SIZE, VER_SIZE));
-		otherText.setEditable(false);
-
-		frame.getContentPane().add(otherTextScroll, BorderLayout.CENTER);
+		textPane = new JTextPane();
+		JScrollPane sp = new JScrollPane(textPane);
+		sp.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+		sp.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
+		textPane.setEditable(false);
+		StyledDocument doc = textPane.getStyledDocument();
+		frame.getContentPane().add(sp, BorderLayout.CENTER);
 		myText = new JTextArea();
 		myText.setLineWrap(true);
 
@@ -132,46 +131,50 @@ public class ChatGUI {
 			@Override
 			public void actionPerformed(ActionEvent evt) {
 				try {
-
-					// Creates Service
-					service = new ChatServerServiceLocator().getChatServer();
-					// sets Port
-					port = new ChatServerServiceLocator().getPort(ChatServer.class);
-					// Gets username for the client
-					username = usernameText.getText();
-
-					// Broadcast a user has joined
-					id = service.join(id, username, " has joined!");
-					if (id == USERNAME_TAKEN) {
-						JOptionPane.showMessageDialog(frame, "Username is already Taken!");
-
+					if (usernameText.getText().isEmpty() || usernameText.getText().length() > MAX_USERNAME_LENGTH) {
+						JOptionPane.showMessageDialog(frame, "Enter a Username between 1-15");
 					} else {
-						// Starts Threads
-						otherTextThread = new ChatListener(frame, otherText, id, username, service);
-						otherTextThread.start();
+						
+						// Creates Service
+						service = new ChatServerServiceLocator().getChatServer();
+						// sets Port
+						port = new ChatServerServiceLocator().getPort(ChatServer.class);
+						// Gets username for the client
+						username = usernameText.getText();
 
-						// Displays Connected
-						frame.setTitle(CONNECTED_TITLE + service.getUserCount());
-						userList.setSelectedIndex(0);
+						// Broadcast a user has joined
+						id = service.join(id, username, " has joined!");
 
-						frame.addWindowListener(new WindowAdapter() {
-							public void windowClosing(WindowEvent e) {
-								try {
-									// Broadcast that a user has left
-									service.leave(id, username, " has disconnected! \n");
-								} catch (Exception ex) {
+						if (id == USERNAME_TAKEN) {
+							JOptionPane.showMessageDialog(frame, "Username is already Taken!");
 
-									System.out.println("Exit Failed");
+						} else {
+							// Starts Threads
+							otherTextThread = new ChatListener(frame, doc, textPane, id, username, service);
+							otherTextThread.start();
+
+							// Displays Connected
+							frame.setTitle(CONNECTED_TITLE + service.getUserCount());
+							userList.setSelectedIndex(0);
+
+							frame.addWindowListener(new WindowAdapter() {
+								public void windowClosing(WindowEvent e) {
+									try {
+										// Broadcast that a user has left
+										service.leave(id, username, " has disconnected! \n");
+									} catch (Exception ex) {
+
+										System.out.println("Exit Failed");
+									}
+									System.exit(0);
 								}
-								System.exit(0);
-							}
-						});
-						// Enables and Disables buttons for GUI
-						disconnectBtn.setEnabled(true);
-						usernameText.setEnabled(false);
-						connectBtn.setEnabled(false);
+							});
+							// Enables and Disables buttons for GUI
+							disconnectBtn.setEnabled(true);
+							usernameText.setEnabled(false);
+							connectBtn.setEnabled(false);
+						}
 					}
-
 				} catch (Exception ex) {
 					System.out.println(ex);
 					JOptionPane.showMessageDialog(frame, "Unable to connect to server");
@@ -215,23 +218,23 @@ public class ChatGUI {
 			try {
 				// Removes unwanted characters
 				textString = textString.replaceAll("[^A-Za-z0-9/ ]", "");
-				
+
 				// if String is Empty, Display Pop-up Message
 				if (textString.isEmpty()) {
 					JOptionPane.showMessageDialog(frame, "Enter a message");
 				}
 
-				// Checking if All Users is Selected and not own username 
+				// Checking if All Users is Selected and not own username
 				else if ((userList.getSelectedValue() != "All Users") && (userList.getSelectedValue() != null)) {
-					
+
 					receiverUsername = userList.getSelectedValue().toString();
-					
-					if (receiverUsername.equals(username)){
-						
+
+					if (receiverUsername.equals(username)) {
+
 						JOptionPane.showMessageDialog(frame, "Can't Send Message to Self");
 					}
-					
-					else{
+
+					else {
 						// Send Private Message
 						service.privateMsg(id, username, receiverUsername, ": " + textString);
 					}
@@ -241,7 +244,7 @@ public class ChatGUI {
 				}
 				// Once message has sent, input chat box.
 				myText.setText("");
-				
+
 			} catch (Exception ie) {
 				System.out.println(ie);
 				myText.setText("");
@@ -250,9 +253,8 @@ public class ChatGUI {
 			textString = "";
 		} else if (c == '\b') {
 			textString = textString.substring(0, textString.length() - 1);
-		} 
-		else {
-				textString = textString + c;
+		} else {
+			textString = textString + c;
 		}
 	}
 
