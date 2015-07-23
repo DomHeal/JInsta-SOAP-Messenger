@@ -29,3 +29,4 @@ Features
 Future Implementations
 ------------------------------------
 - ~~Coloured Messages~~ (Added)
+- Admin Login
