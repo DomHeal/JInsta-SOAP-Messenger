@@ -12,7 +12,7 @@ Instructions
 - Enter Username
 - Click Connect
 - Enter a Message Followed by the Enter Button
-- Use /pm "Username" "Message" to send PM's 
+- Click a Username to Private Message
 
 Features
 ------------------------------------
@@ -28,4 +28,3 @@ Features
 Future Implementations
 ------------------------------------
 - Coloured Messages
-- Easy Private Message
