@@ -118,7 +118,7 @@ public class ChatGUI {
 		});
 
 		userList = new JList<String>();
-		userList.setForeground(new Color(0, 0, 0));
+		userList.setForeground(Color.BLACK);
 		westPanel.add(userList);
 
 		frame.setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("icon.png")));
@@ -152,6 +152,7 @@ public class ChatGUI {
 
 						// Displays Connected
 						frame.setTitle(CONNECTED_TITLE + service.getUserCount());
+						userList.setSelectedIndex(0);
 
 						frame.addWindowListener(new WindowAdapter() {
 							public void windowClosing(WindowEvent e) {
@@ -214,28 +215,33 @@ public class ChatGUI {
 			try {
 				// Removes unwanted characters
 				textString = textString.replaceAll("[^A-Za-z0-9/ ]", "");
-
+				
+				// if String is Empty, Display Pop-up Message
 				if (textString.isEmpty()) {
 					JOptionPane.showMessageDialog(frame, "Enter a message");
 				}
 
-				// then check if it is a private message or not
-				else if (textString.startsWith("/pm")) {
-					// if its a private message split the array into 3
-					String arr[] = textString.split(" ", 3);
-					// Set Username
-					receiverUsername = arr[1];
-					// Set Message
-					textString = arr[2];
-					// sends id, username to send private msg to
-					// recieverusername with the message
-					service.privateMsg(id, username, receiverUsername, ": " + textString);
+				// Checking if All Users is Selected and not own username 
+				else if ((userList.getSelectedValue() != "All Users") && (userList.getSelectedValue() != null)) {
+					
+					receiverUsername = userList.getSelectedValue().toString();
+					
+					if (receiverUsername.equals(username)){
+						
+						JOptionPane.showMessageDialog(frame, "Can't Send Message to Self");
+					}
+					
+					else{
+						// Send Private Message
+						service.privateMsg(id, username, receiverUsername, ": " + textString);
+					}
 				} else {
 					// if its not a private message, broadcast to all;
 					service.talk(id, username + ": " + textString);
 				}
 				// Once message has sent, input chat box.
 				myText.setText("");
+				
 			} catch (Exception ie) {
 				System.out.println(ie);
 				myText.setText("");
@@ -244,16 +250,15 @@ public class ChatGUI {
 			textString = "";
 		} else if (c == '\b') {
 			textString = textString.substring(0, textString.length() - 1);
-		} else {
+		} 
+		else {
+				textString = textString + c;
 		}
-
-		textString = textString + c;
 	}
-
-	
 
 	public static void setUserList(HashMap<String, Integer> users) {
 		DefaultListModel<String> model = new DefaultListModel<String>();
+		model.addElement("All Users");
 		for (Object x : users.keySet()) {
 			model.addElement(String.valueOf(x));
 		}
