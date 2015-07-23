@@ -4,6 +4,15 @@ The application implemented SOAP features with a graphical user interface which 
 
 <img src="http://i.imgur.com/oe7Qaov.png"/>
 
+Instructions
+------------------------------------
+- Run ChatServer.java on Tomcat
+- Run ChatClient.Java
+- Enter Username
+- Click Connect
+- Enter a Message Followed by the Enter Button
+- Use /pm "Username" "Message" to send PM's 
+
 Features
 ------------------------------------
 - Username
