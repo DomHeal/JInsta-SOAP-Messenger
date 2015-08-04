@@ -32,11 +32,12 @@ public class ChatGUI {
 	private static JTextField usernameText;
 	private JScrollPane myTextScroll;
 	private static ChatListener otherTextThread;
-	private String textString = "";
+	private String Message = "";
 	private JButton connectBtn;
 	private JButton disconnectBtn;
 	private JPanel topPanel;
 	private JLabel usernameLbl;
+	private Color COLOR_PURPLE = new Color(200, 170, 212);
 
 	public static final String DISCONNECTED_TITLE = "Chat Client - Disconnected";
 	public static final String CONNECTED_TITLE = "Chat Client - Connected - Users Online: ";
@@ -56,9 +57,14 @@ public class ChatGUI {
 	private String receiverUsername;
 	private JPanel westPanel;
 	private static JList<String> userList;
+	private static DefaultListModel<String> model = new DefaultListModel<String>();
 
 	private final int USERNAME_TAKEN = -1;
+	private final String JOINED_MSG = " has joined!";
+	private final String LEFT_MSG = " has left!";
 	private JTextPane textPane;
+	
+	
 
 	/* Creates GUI */
 	/**
@@ -75,13 +81,13 @@ public class ChatGUI {
 		disconnectBtn.setEnabled(false);
 		topPanel = new JPanel();
 		topPanel.setLayout(new FlowLayout());
-		topPanel.setBackground(new Color(200, 170, 212));
+		topPanel.setBackground(COLOR_PURPLE);
 
 		topPanel.add(usernameLbl);
 		topPanel.add(usernameText);
 		topPanel.add(connectBtn);
 		topPanel.add(disconnectBtn);
-		frame.getContentPane().add(topPanel, java.awt.BorderLayout.NORTH);
+		frame.getContentPane().add(topPanel, BorderLayout.NORTH);
 
 		westPanel = new JPanel();
 		westPanel.setBorder(new TitledBorder(null, "Users", TitledBorder.LEADING, TitledBorder.TOP, null, null));
@@ -102,7 +108,7 @@ public class ChatGUI {
 		myText.setLineWrap(true);
 
 		myTextScroll = new JScrollPane(myText);
-		myTextScroll.setViewportBorder(new MatteBorder(5, 5, 5, 5, (Color) new Color(200, 170, 212)));
+		myTextScroll.setViewportBorder(new MatteBorder(5, 5, 5, 5, COLOR_PURPLE));
 		frame.getContentPane().add(myTextScroll, BorderLayout.SOUTH);
 		myTextScroll.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 		myTextScroll.setMaximumSize(new Dimension(HOR_SIZE_INPUT, VER_SIZE_INPUT));
@@ -110,8 +116,8 @@ public class ChatGUI {
 		myTextScroll.setPreferredSize(new Dimension(HOR_SIZE_INPUT, VER_SIZE_INPUT));
 		myTextScroll.setEnabled(false);
 
-		myText.addKeyListener(new java.awt.event.KeyAdapter() {
-			public void keyTyped(java.awt.event.KeyEvent evt) {
+		myText.addKeyListener(new KeyAdapter() {
+			public void keyTyped(KeyEvent evt) {
 				textTyped(evt);
 			}
 		});
@@ -125,7 +131,8 @@ public class ChatGUI {
 		frame.pack();
 		frame.setVisible(true);
 		frame.setLocationRelativeTo(null);
-
+		frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+		
 		/* Listener for the Connect Button */
 		connectBtn.addActionListener(new ActionListener() {
 			@Override
@@ -143,7 +150,7 @@ public class ChatGUI {
 						username = usernameText.getText();
 
 						// Broadcast a user has joined
-						id = service.join(id, username, " has joined!");
+						id = service.join(id, username, JOINED_MSG);
 
 						if (id == USERNAME_TAKEN) {
 							JOptionPane.showMessageDialog(frame, "Username is already Taken!");
@@ -157,18 +164,7 @@ public class ChatGUI {
 							frame.setTitle(CONNECTED_TITLE + service.getUserCount());
 							userList.setSelectedIndex(0);
 
-							frame.addWindowListener(new WindowAdapter() {
-								public void windowClosing(WindowEvent e) {
-									try {
-										// Broadcast that a user has left
-										service.leave(id, username, " has disconnected! \n");
-									} catch (Exception ex) {
-
-										System.out.println("Exit Failed");
-									}
-									System.exit(0);
-								}
-							});
+	
 							// Enables and Disables buttons for GUI
 							disconnectBtn.setEnabled(true);
 							usernameText.setEnabled(false);
@@ -188,27 +184,56 @@ public class ChatGUI {
 			public void actionPerformed(ActionEvent evt) {
 				try {
 					// When disconnected, interrupt Thread
-					otherTextThread.interrupt();
+					service.leave(id, username, LEFT_MSG + "\n");
+					otherTextThread.terminate();
+					
+					// Make connection null
+					service = null;
+					port = null;
+					
 					// Enable / Disable buttons for GUI
 					disconnectBtn.setEnabled(false);
 					usernameText.setEnabled(true);
 					connectBtn.setEnabled(true);
 
 					// Displays Disconnected
-
 					frame.setTitle(DISCONNECTED_TITLE);
+				
+					// Clear View
+					myText.setText("");
+					textPane.setText(null);
+					model.clear();
 
 				} catch (Exception ex) {
 					JOptionPane.showMessageDialog(frame, "Unable to connect to server");
 				}
 			}
 		});
+		
+		frame.addWindowListener(new WindowAdapter() {
+			@Override
+			public void windowClosing(WindowEvent e) {
+				try {
+					// Broadcast that a user has left
+					if (service != null){
+						service.leave(id, username, LEFT_MSG +  "\n");
+						otherTextThread.terminate();
+					}
+				} catch (Exception ex) {
 
+					System.out.println("Exit Failed");
+				}
+				finally{
+						System.exit(0);
+				}
+			}
+		});
 	}
+	
 	/*
-	 * This method controls the talking and private messages by check if the
-	 * first character is an "@" sign, if it is, it will send as a private
-	 * message, if not it will broadcast it to all users.
+	 * This method controls the Global and Private messages by, waiting until the enter
+	 * key has been pressed. It will remove all invalid characters from the Message before
+	 * it will broadcast it to all users.
 	 */
 
 	private void textTyped(KeyEvent evt) {
@@ -216,11 +241,14 @@ public class ChatGUI {
 
 		if (c == '\n') {
 			try {
+				// Gets Message
+				Message = myText.getText();
+				
 				// Removes unwanted characters
-				textString = textString.replaceAll("[^A-Za-z0-9/ ]", "");
+				Message = Message.replaceAll("[^A-Za-z0-9?!.,/]", "");
 
 				// if String is Empty, Display Pop-up Message
-				if (textString.isEmpty()) {
+				if (Message.isEmpty()) {
 					JOptionPane.showMessageDialog(frame, "Enter a message");
 				}
 
@@ -236,11 +264,11 @@ public class ChatGUI {
 
 					else {
 						// Send Private Message
-						service.privateMsg(id, username, receiverUsername, ": " + textString);
+						service.privateMsg(id, username, receiverUsername, ": " + Message);
 					}
 				} else {
 					// if its not a private message, broadcast to all;
-					service.talk(id, username + ": " + textString);
+					service.talk(id, username + ": " + Message);
 				}
 				// Once message has sent, input chat box.
 				myText.setText("");
@@ -250,17 +278,17 @@ public class ChatGUI {
 				myText.setText("");
 				JOptionPane.showMessageDialog(frame, "Failed to send message");
 			}
-			textString = "";
-		} else if (c == '\b') {
-			textString = textString.substring(0, textString.length() - 1);
-		} else {
-			textString = textString + c;
 		}
 	}
 
 	public static void setUserList(HashMap<String, Integer> users) {
-		DefaultListModel<String> model = new DefaultListModel<String>();
+		// Clear List before Creating
+		model.clear();
+		
+		// Add All Users to list
 		model.addElement("All Users");
+		
+		// Loop through users
 		for (Object x : users.keySet()) {
 			model.addElement(String.valueOf(x));
 		}
