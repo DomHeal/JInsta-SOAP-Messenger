@@ -213,19 +213,10 @@ public class ChatGUI {
 		frame.addWindowListener(new WindowAdapter() {
 			@Override
 			public void windowClosing(WindowEvent e) {
-				try {
-					// Broadcast that a user has left
-					if (service != null){
-						service.leave(id, username, LEFT_MSG +  "\n");
-						otherTextThread.terminate();
-					}
-				} catch (Exception ex) {
 
-					System.out.println("Exit Failed");
-				}
-				finally{
-						System.exit(0);
-				}
+					disconnectBtn.doClick();
+					System.exit(0);
+			
 			}
 		});
 	}
