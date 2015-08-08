@@ -7,8 +7,8 @@
   <ns1:parameter name="dotNetSoapEncFix" value="true"/>
   <ns1:parameter name="enableNamespacePrefixOptimization" value="false"/>
   <ns1:parameter name="sendXMLDeclaration" value="true"/>
-  <ns1:parameter name="attachments.implementation" value="org.apache.axis.attachments.AttachmentsImpl"/>
   <ns1:parameter name="sendXsiTypes" value="true"/>
+  <ns1:parameter name="attachments.implementation" value="org.apache.axis.attachments.AttachmentsImpl"/>
   <ns1:requestFlow>
    <ns1:handler type="java:org.apache.axis.handlers.JWSHandler">
     <ns1:parameter name="scope" value="session"/>
@@ -36,15 +36,12 @@
   <ns2:operation name="join" qname="ns1:join" returnQName="ns1:joinReturn" returnType="xsd:int" soapAction="" xmlns:ns1="http://wschatserver" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:ns2="http://xml.apache.org/axis/wsdd/">
    <ns2:parameter qname="ns1:id" type="xsd:int"/>
    <ns2:parameter qname="ns1:username" type="xsd:string"/>
-   <ns2:parameter qname="ns1:joinMessage" type="xsd:string"/>
   </ns2:operation>
   <ns1:operation name="listen" qname="ns2:listen" returnQName="ns2:listenReturn" returnType="xsd:string" soapAction="" xmlns:ns2="http://wschatserver" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
    <ns1:parameter qname="ns2:id" type="xsd:int"/>
   </ns1:operation>
   <ns1:operation name="leave" qname="ns3:leave" soapAction="" xmlns:ns3="http://wschatserver">
-   <ns1:parameter qname="ns3:id" type="xsd:int" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
    <ns1:parameter qname="ns3:username" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
-   <ns1:parameter qname="ns3:leavemessage" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
   </ns1:operation>
   <ns1:operation name="talk" qname="ns4:talk" soapAction="" xmlns:ns4="http://wschatserver">
    <ns1:parameter qname="ns4:id" type="xsd:int" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
@@ -56,8 +53,8 @@
    <ns1:parameter qname="ns5:receiverUsername" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
    <ns1:parameter qname="ns5:message" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
   </ns1:operation>
-  <ns1:operation name="getUsernames" qname="ns6:getUsernames" returnQName="ns6:getUsernamesReturn" returnType="ns7:Map" soapAction="" xmlns:ns6="http://wschatserver" xmlns:ns7="http://xml.apache.org/xml-soap"/>
-  <ns1:operation name="getUserCount" qname="ns8:getUserCount" returnQName="ns8:getUserCountReturn" returnType="xsd:int" soapAction="" xmlns:ns8="http://wschatserver" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+  <ns1:operation name="getUserCount" qname="ns6:getUserCount" returnQName="ns6:getUserCountReturn" returnType="xsd:int" soapAction="" xmlns:ns6="http://wschatserver" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+  <ns1:operation name="getUsernames" qname="ns7:getUsernames" returnQName="ns7:getUsernamesReturn" returnType="ns8:Map" soapAction="" xmlns:ns7="http://wschatserver" xmlns:ns8="http://xml.apache.org/xml-soap"/>
   <ns1:parameter name="allowedMethods" value="getUsernames privateMsg getUserCount leave talk join listen"/>
   <ns1:parameter name="typeMappingVersion" value="1.2"/>
   <ns1:parameter name="wsdlPortType" value="ChatServer"/>

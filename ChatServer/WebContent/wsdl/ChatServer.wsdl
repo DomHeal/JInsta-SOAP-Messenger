@@ -10,7 +10,6 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
      <sequence>
       <element name="id" type="xsd:int"/>
       <element name="username" type="xsd:string"/>
-      <element name="joinMessage" type="xsd:string"/>
      </sequence>
     </complexType>
    </element>
@@ -38,9 +37,7 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
    <element name="leave">
     <complexType>
      <sequence>
-      <element name="id" type="xsd:int"/>
       <element name="username" type="xsd:string"/>
-      <element name="leavemessage" type="xsd:string"/>
      </sequence>
     </complexType>
    </element>
@@ -71,16 +68,6 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
    <element name="privateMsgResponse">
     <complexType/>
    </element>
-   <element name="getUsernames">
-    <complexType/>
-   </element>
-   <element name="getUsernamesResponse">
-    <complexType>
-     <sequence>
-      <element name="getUsernamesReturn" type="apachesoap:Map"/>
-     </sequence>
-    </complexType>
-   </element>
    <element name="getUserCount">
     <complexType/>
    </element>
@@ -88,6 +75,16 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
     <complexType>
      <sequence>
       <element name="getUserCountReturn" type="xsd:int"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="getUsernames">
+    <complexType/>
+   </element>
+   <element name="getUsernamesResponse">
+    <complexType>
+     <sequence>
+      <element name="getUsernamesReturn" type="apachesoap:Map"/>
      </sequence>
     </complexType>
    </element>
@@ -281,18 +278,6 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
 
       </wsdl:operation>
 
-      <wsdl:operation name="getUsernames">
-
-         <wsdl:input message="impl:getUsernamesRequest" name="getUsernamesRequest">
-
-       </wsdl:input>
-
-         <wsdl:output message="impl:getUsernamesResponse" name="getUsernamesResponse">
-
-       </wsdl:output>
-
-      </wsdl:operation>
-
       <wsdl:operation name="getUserCount">
 
          <wsdl:input message="impl:getUserCountRequest" name="getUserCountRequest">
@@ -300,6 +285,18 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
        </wsdl:input>
 
          <wsdl:output message="impl:getUserCountResponse" name="getUserCountResponse">
+
+       </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getUsernames">
+
+         <wsdl:input message="impl:getUsernamesRequest" name="getUsernamesRequest">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:getUsernamesResponse" name="getUsernamesResponse">
 
        </wsdl:output>
 
@@ -401,24 +398,6 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
 
       </wsdl:operation>
 
-      <wsdl:operation name="getUsernames">
-
-         <wsdlsoap:operation soapAction=""/>
-
-         <wsdl:input name="getUsernamesRequest">
-
-            <wsdlsoap:body use="literal"/>
-
-         </wsdl:input>
-
-         <wsdl:output name="getUsernamesResponse">
-
-            <wsdlsoap:body use="literal"/>
-
-         </wsdl:output>
-
-      </wsdl:operation>
-
       <wsdl:operation name="getUserCount">
 
          <wsdlsoap:operation soapAction=""/>
@@ -430,6 +409,24 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
          </wsdl:input>
 
          <wsdl:output name="getUserCountResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getUsernames">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="getUsernamesRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="getUsernamesResponse">
 
             <wsdlsoap:body use="literal"/>
 

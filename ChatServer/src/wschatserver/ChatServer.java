@@ -21,17 +21,14 @@ public class ChatServer {
 		return userList;
 	}
 	/* On Connect, Broadcasts messages and adds usernames and id to HashMap */
-	public int join(int id, String username, String joinMessage) throws InterruptedException {
+	public int join(int id, String username) throws InterruptedException {
 		synchronized (serverList) {
 			
+			// If Username is Taken
 			if (userList.containsKey(username)){
 				return -1;
 			}
-//			// Broadcasts Message to all Users
-//			for (int i = 0; i < serverList.size(); i++) {
-//				String val = serverList.get(i) + username + joinMessage;
-//				serverList.set(i, val);
-//			}
+			
 			// Gets user ID
 			id = serverList.size();
 			// Assign username to id in HashMap
@@ -46,7 +43,6 @@ public class ChatServer {
 
 	/* Default Talk method, Broadcast message to all users */
 	public void talk(int id, String message) throws InterruptedException {
-
 		synchronized (serverList) {
 			for (int i = 0; i < serverList.size(); i++) {
 				String val = serverList.get(i) + message;
@@ -58,7 +54,6 @@ public class ChatServer {
 
 	/* Default Listne method, Listens to all users messages */
 	public String listen(int id) throws InterruptedException {
-
 		synchronized (serverList) {
 			String temp = serverList.get(id);
 			serverList.set(id, "");
@@ -67,15 +62,9 @@ public class ChatServer {
 	}
 
 	/* Broadcasts to all users that a user has left */
-	public void leave(int id, String username, String leavemessage) throws InterruptedException {
-
-//		synchronized (serverList) {
-//			for (int i = 0; i < serverList.size(); i++) {
-//				String val = serverList.get(i) + username + leavemessage;
-//				serverList.set(i, val);
-//			}
+	public void leave(String username) throws InterruptedException {
 			userList.remove(username);
-		//}
+
 	}
 
 	/* Private message Method */
@@ -83,19 +72,25 @@ public class ChatServer {
 			throws InterruptedException {
 		synchronized (serverList) {
 			try {
+				
 				// Takes receieverUsername and finds its value
 				Integer i = userList.get(receiverUsername);
+				
 				// Construct the message to display as string
 				String val = "[PM] " + username + serverList.get(i) + message;
+				
 				// Display to receiver
 				serverList.set(i, val);
 
 				// Takes senderUsername and finds its value
 				Integer y = userList.get(username);
+				
 				// Construct the message to display as string
 				String vax = "[YOU] " + receiverUsername + serverList.get(y) + message;
+				
 				// Display to sender
 				serverList.set(y, vax);
+				
 			} catch (Exception e) {
 				serverList.set(id, "Failed to send Private MSG");
 			}

@@ -23,15 +23,12 @@
       <operation name="join" qname="operNS:join" xmlns:operNS="http://wschatserver" returnQName="retNS:joinReturn" xmlns:retNS="http://wschatserver" returnType="rtns:int" xmlns:rtns="http://www.w3.org/2001/XMLSchema" soapAction="" >
         <parameter qname="pns:id" xmlns:pns="http://wschatserver" type="tns:int" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
         <parameter qname="pns:username" xmlns:pns="http://wschatserver" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
-        <parameter qname="pns:joinMessage" xmlns:pns="http://wschatserver" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
       </operation>
       <operation name="listen" qname="operNS:listen" xmlns:operNS="http://wschatserver" returnQName="retNS:listenReturn" xmlns:retNS="http://wschatserver" returnType="rtns:string" xmlns:rtns="http://www.w3.org/2001/XMLSchema" soapAction="" >
         <parameter qname="pns:id" xmlns:pns="http://wschatserver" type="tns:int" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
       </operation>
       <operation name="leave" qname="operNS:leave" xmlns:operNS="http://wschatserver" soapAction="" >
-        <parameter qname="pns:id" xmlns:pns="http://wschatserver" type="tns:int" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
         <parameter qname="pns:username" xmlns:pns="http://wschatserver" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
-        <parameter qname="pns:leavemessage" xmlns:pns="http://wschatserver" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
       </operation>
       <operation name="talk" qname="operNS:talk" xmlns:operNS="http://wschatserver" soapAction="" >
         <parameter qname="pns:id" xmlns:pns="http://wschatserver" type="tns:int" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
@@ -43,9 +40,9 @@
         <parameter qname="pns:receiverUsername" xmlns:pns="http://wschatserver" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
         <parameter qname="pns:message" xmlns:pns="http://wschatserver" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
       </operation>
-      <operation name="getUsernames" qname="operNS:getUsernames" xmlns:operNS="http://wschatserver" returnQName="retNS:getUsernamesReturn" xmlns:retNS="http://wschatserver" returnType="rtns:Map" xmlns:rtns="http://xml.apache.org/xml-soap" soapAction="" >
-      </operation>
       <operation name="getUserCount" qname="operNS:getUserCount" xmlns:operNS="http://wschatserver" returnQName="retNS:getUserCountReturn" xmlns:retNS="http://wschatserver" returnType="rtns:int" xmlns:rtns="http://www.w3.org/2001/XMLSchema" soapAction="" >
+      </operation>
+      <operation name="getUsernames" qname="operNS:getUsernames" xmlns:operNS="http://wschatserver" returnQName="retNS:getUsernamesReturn" xmlns:retNS="http://wschatserver" returnType="rtns:Map" xmlns:rtns="http://xml.apache.org/xml-soap" soapAction="" >
       </operation>
       <parameter name="allowedMethods" value="getUsernames privateMsg getUserCount leave talk join listen"/>
 
