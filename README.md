@@ -16,15 +16,17 @@ Instructions
 
 Features
 ------------------------------------
-- Username
+- Username Entry
 - Global Messaging
 - Private Messaging
-- User List
+- User List (including: preset images(Users / Admin)
 - Number of Clients Connected
 - No Empty Messages
 - No Illegal Characters
 - No Duplicate Usernames
 - Coloured Messages
+- Admin Login
+- Admin Attributes (Red Name / Admin Icon)
 
 Future Implementations
 ------------------------------------
