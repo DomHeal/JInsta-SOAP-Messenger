@@ -28,7 +28,7 @@ public class ChatList extends JLabel implements ListCellRenderer<Object> {
 	private ImageIcon normalUser = new ImageIcon(
 			Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/user.png")));
 	private ImageIcon adminUser = new ImageIcon(
-			Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/admin.png")));
+			Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/admin_enabled.png")));
 	private int AllUserPos = 0;
 
 	public Component getListCellRendererComponent(JList<?> list, Object value, int index, boolean isSelected,

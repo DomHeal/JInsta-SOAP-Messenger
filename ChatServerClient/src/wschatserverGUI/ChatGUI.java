@@ -57,13 +57,10 @@ public class ChatGUI {
 
 	public static final String DISCONNECTED_TITLE = "Chat Client - Disconnected";
 	public static final String CONNECTED_TITLE = "Chat Client - Connected - Users Online: ";
-
 	private static final int WEST_HOR_SIZE = 100;
 	private static final int WEST_VER_SIZE = 200;
-
 	private static final int HOR_SIZE_INPUT = 500;
 	private static final int VER_SIZE_INPUT = 50;
-
 	private static final int MAX_USERNAME_LENGTH = 12;
 
 	public static ChatServer service;
@@ -74,12 +71,14 @@ public class ChatGUI {
 	private String receiverUsername;
 	private JPanel westPanel;
 	private static JList<String> userList;
-	private static Object[] adminList;
 	private static DefaultListModel<String> model = new DefaultListModel<String>();
 
 	private final int USERNAME_TAKEN = -1;
 	private JTextPane textPane;
-	private JLabel lblAdmin;
+	public static JLabel lblAdmin;
+	public static AdminGUI adminDialog;
+	
+	public ImageIcon adminDisabled = new ImageIcon(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/admin_disabled.png")));
 	
 	
 
@@ -101,12 +100,18 @@ public class ChatGUI {
 		topPanel.setBackground(COLOR_PURPLE);
 		
 		lblAdmin = new JLabel();
-		lblAdmin.setIcon(new ImageIcon(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/admin.png"))));
+		lblAdmin.setIcon(adminDisabled);
 		lblAdmin.setCursor(new Cursor(Cursor.HAND_CURSOR));
 		lblAdmin.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
-				new AdminGUI();
+				if (lblAdmin.getIcon().equals(adminDisabled)){
+					adminDialog = new AdminGUI();
+				}
+				else {
+					adminDialog.setVisible(true);
+				}
+				
 			}
 		});
 		topPanel.add(lblAdmin);

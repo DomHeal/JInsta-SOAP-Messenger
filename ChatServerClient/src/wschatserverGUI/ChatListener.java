@@ -63,26 +63,20 @@ public class ChatListener extends Thread {
 					ChatGUI.setUserList(users);
 
 				}
-				
 				// Listen for Messages
 				String newText = service.listen(id);
 				
 				// Check if the Message is a PM
 				if (!newText.equals("")) {
 					if (newText.startsWith("[PM]")){
-						
 						 pmRecieveATT.addAttribute(StyleConstants.CharacterConstants.Foreground, new Color(142, 68, 173));
-						 
 						 doc.insertString(doc.getLength(), newText + "\n", pmRecieveATT );
 						 
 					} else if (newText.startsWith("[YOU]")){
-						
 						pmSendATT.addAttribute(StyleConstants.CharacterConstants.Foreground, new Color(22, 160, 133));
 						doc.insertString(doc.getLength(), newText + "\n", pmSendATT );
 					}
-					
 					else{
-						
 						doc.insertString(doc.getLength(), newText + "\n", null );
 					}
 				}

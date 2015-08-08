@@ -1,9 +1,11 @@
 package wschatserverAdmin;
 
 import java.awt.BorderLayout;
+import java.awt.Dialog;
 import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.Image;
 import java.awt.Insets;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
@@ -13,26 +15,38 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
+import wschatserverGUI.ChatGUI;
+
 public class AdminGUI extends JDialog {
 
+	private static final long serialVersionUID = 6434228078327058813L;
+	
 	private final JPanel contentPanel = new JPanel();
 	private JTextField textFieldUsername;
 	private JTextField textFieldPassword;
 	private static boolean isAdmin = false;
+	private ImageIcon adminIcon = new ImageIcon(Toolkit.getDefaultToolkit().getImage(AdminGUI.class.getResource("/images/adminIcon.png")));
+	private ImageIcon admin_enabled = new ImageIcon(Toolkit.getDefaultToolkit().getImage(AdminGUI.class.getResource("/images/admin_enabled.png")));
+	private ImageIcon admin_disabled = new ImageIcon(Toolkit.getDefaultToolkit().getImage(AdminGUI.class.getResource("/images/admin_disabled.png")));
+	private Image icon = Toolkit.getDefaultToolkit().getImage(AdminGUI.class.getResource("/images/icon.png"));
+	
+	private JButton cancelButton;
+	private JButton okButton;
 
 	/**
 	 * Create the dialog.
 	 */
 	public AdminGUI() {
-		
+		Dialog dialog = this;
 		setModal(true);
 		setAlwaysOnTop(true);
 		setResizable(false);
-		setIconImage(Toolkit.getDefaultToolkit().getImage(AdminGUI.class.getResource("/images/icon.png")));
+		setIconImage(icon);
 		setTitle("Admin Login");
 		
 		setBounds(100, 100, 349, 241);
@@ -87,23 +101,43 @@ public class AdminGUI extends JDialog {
 		buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
 		getContentPane().add(buttonPane, BorderLayout.SOUTH);
 
-		JButton okButton = new JButton("Login");
+		okButton = new JButton("Login");
 		okButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				if (textFieldUsername.getText().equals("admin")) {
+				if (textFieldUsername.getText().equals("admin") && (textFieldPassword.getText().equals("admin"))) {
 					grantAdmin(true);
+					setVisible(false);
+					ChatGUI.lblAdmin.setIcon(admin_enabled);					
+					okButton.setEnabled(false);
+					cancelButton.setText("Logout");
+					textFieldUsername.setEnabled(false);
+					textFieldPassword.setEnabled(false);
 				}
-				dispose();
+				else{
+					grantAdmin(false);
+					ChatGUI.lblAdmin.setIcon(admin_disabled);
+				JOptionPane.showMessageDialog(dialog, "Wrong Username / Password");
+				}
 			}
 		});
 		okButton.setActionCommand("OK");
 		buttonPane.add(okButton);
 		getRootPane().setDefaultButton(okButton);
 
-		JButton cancelButton = new JButton("Cancel");
+		cancelButton = new JButton("Cancel");
 		cancelButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				dispose();
+				if (cancelButton.getText().equals("Logout")){
+					okButton.setEnabled(true);
+					cancelButton.setText("Cancel");
+					grantAdmin(false);
+					ChatGUI.lblAdmin.setIcon(admin_disabled);
+					textFieldUsername.setEnabled(true);
+					textFieldPassword.setEnabled(true);
+				}
+				else{
+					dispose();
+				}
 			}
 		});
 		cancelButton.setActionCommand("Cancel");
@@ -113,8 +147,7 @@ public class AdminGUI extends JDialog {
 		getContentPane().add(northPanel, BorderLayout.NORTH);
 
 		JLabel lblAdminLoginIcon = new JLabel("");
-		lblAdminLoginIcon.setIcon(new ImageIcon(
-				Toolkit.getDefaultToolkit().getImage(AdminGUI.class.getResource("/images/adminLogin.png"))));
+		lblAdminLoginIcon.setIcon(adminIcon);
 		northPanel.add(lblAdminLoginIcon);
 		
 		setLocationRelativeTo(null);
