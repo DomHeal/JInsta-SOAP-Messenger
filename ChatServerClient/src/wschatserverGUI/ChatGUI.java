@@ -151,7 +151,6 @@ public class ChatGUI {
 		westPanel.add(userList);
 
 		frame.setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/icon.png")));
-
 		frame.pack();
 		frame.setVisible(true);
 		frame.setLocationRelativeTo(null);
@@ -271,12 +270,12 @@ public class ChatGUI {
 				else if ((userList.getSelectedIndex() != 0) && (userList.getSelectedValue() != null)) {
 
 					receiverUsername = userList.getSelectedValue().toString();
-
+					
+					// If the User tries to talk to himself, diplay message dialog
 					if (receiverUsername.equals(username)) {
 
 						JOptionPane.showMessageDialog(frame, "Can't Send Message to Self");
 					}
-
 					else {
 						// Send Private Message
 						service.privateMsg(id, username, receiverUsername, ": " + messageText);
@@ -311,6 +310,9 @@ public class ChatGUI {
 
 	}
 
+	/*
+	 * Adds the Model and Cell Graphics
+	 */
 	private static void addUsers(DefaultListModel<String> model) {
 		userList.setModel(model);
 		userList.setCellRenderer(new ChatList());
