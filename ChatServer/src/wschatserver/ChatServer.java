@@ -9,8 +9,7 @@ public class ChatServer {
 	// Variables
 	private static ArrayList<String> serverList = new ArrayList<String>();
 	private static HashMap<String, Integer> userList = new HashMap<String, Integer>();
-	private Object lock = new Object();
-
+	private static ArrayList<String> adminList = new ArrayList<String>();
 	
 	public int getUserCount(){
 		int i = userList.size();
@@ -64,6 +63,7 @@ public class ChatServer {
 	/* Broadcasts to all users that a user has left */
 	public void leave(String username) throws InterruptedException {
 			userList.remove(username);
+			//adminList.remove(username);
 
 	}
 
@@ -96,5 +96,17 @@ public class ChatServer {
 			}
 
 		}
+	}
+	
+	public void grantAdmin(String username){
+		adminList.add(username);
+	}
+	
+	public boolean isAdmin(String username){
+		if (adminList.contains(username)){
+			return true;
+		}
+		return false;
+	
 	}
 }

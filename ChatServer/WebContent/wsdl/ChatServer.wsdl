@@ -55,19 +55,6 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
    <element name="talkResponse">
     <complexType/>
    </element>
-   <element name="privateMsg">
-    <complexType>
-     <sequence>
-      <element name="id" type="xsd:int"/>
-      <element name="username" type="xsd:string"/>
-      <element name="receiverUsername" type="xsd:string"/>
-      <element name="message" type="xsd:string"/>
-     </sequence>
-    </complexType>
-   </element>
-   <element name="privateMsgResponse">
-    <complexType/>
-   </element>
    <element name="getUserCount">
     <complexType/>
    </element>
@@ -85,6 +72,43 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
     <complexType>
      <sequence>
       <element name="getUsernamesReturn" type="apachesoap:Map"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="privateMsg">
+    <complexType>
+     <sequence>
+      <element name="id" type="xsd:int"/>
+      <element name="username" type="xsd:string"/>
+      <element name="receiverUsername" type="xsd:string"/>
+      <element name="message" type="xsd:string"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="privateMsgResponse">
+    <complexType/>
+   </element>
+   <element name="grantAdmin">
+    <complexType>
+     <sequence>
+      <element name="username" type="xsd:string"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="grantAdminResponse">
+    <complexType/>
+   </element>
+   <element name="isAdmin">
+    <complexType>
+     <sequence>
+      <element name="username" type="xsd:string"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="isAdminResponse">
+    <complexType>
+     <sequence>
+      <element name="isAdminReturn" type="xsd:boolean"/>
      </sequence>
     </complexType>
    </element>
@@ -107,6 +131,14 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
    <wsdl:message name="leaveResponse">
 
       <wsdl:part element="impl:leaveResponse" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="isAdminRequest">
+
+      <wsdl:part element="impl:isAdmin" name="parameters">
 
       </wsdl:part>
 
@@ -160,6 +192,14 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
 
    </wsdl:message>
 
+   <wsdl:message name="isAdminResponse">
+
+      <wsdl:part element="impl:isAdminResponse" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
    <wsdl:message name="joinResponse">
 
       <wsdl:part element="impl:joinResponse" name="parameters">
@@ -195,6 +235,22 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
    <wsdl:message name="privateMsgResponse">
 
       <wsdl:part element="impl:privateMsgResponse" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="grantAdminRequest">
+
+      <wsdl:part element="impl:grantAdmin" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="grantAdminResponse">
+
+      <wsdl:part element="impl:grantAdminResponse" name="parameters">
 
       </wsdl:part>
 
@@ -266,18 +322,6 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
 
       </wsdl:operation>
 
-      <wsdl:operation name="privateMsg">
-
-         <wsdl:input message="impl:privateMsgRequest" name="privateMsgRequest">
-
-       </wsdl:input>
-
-         <wsdl:output message="impl:privateMsgResponse" name="privateMsgResponse">
-
-       </wsdl:output>
-
-      </wsdl:operation>
-
       <wsdl:operation name="getUserCount">
 
          <wsdl:input message="impl:getUserCountRequest" name="getUserCountRequest">
@@ -297,6 +341,42 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
        </wsdl:input>
 
          <wsdl:output message="impl:getUsernamesResponse" name="getUsernamesResponse">
+
+       </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="privateMsg">
+
+         <wsdl:input message="impl:privateMsgRequest" name="privateMsgRequest">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:privateMsgResponse" name="privateMsgResponse">
+
+       </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="grantAdmin">
+
+         <wsdl:input message="impl:grantAdminRequest" name="grantAdminRequest">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:grantAdminResponse" name="grantAdminResponse">
+
+       </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="isAdmin">
+
+         <wsdl:input message="impl:isAdminRequest" name="isAdminRequest">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:isAdminResponse" name="isAdminResponse">
 
        </wsdl:output>
 
@@ -380,24 +460,6 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
 
       </wsdl:operation>
 
-      <wsdl:operation name="privateMsg">
-
-         <wsdlsoap:operation soapAction=""/>
-
-         <wsdl:input name="privateMsgRequest">
-
-            <wsdlsoap:body use="literal"/>
-
-         </wsdl:input>
-
-         <wsdl:output name="privateMsgResponse">
-
-            <wsdlsoap:body use="literal"/>
-
-         </wsdl:output>
-
-      </wsdl:operation>
-
       <wsdl:operation name="getUserCount">
 
          <wsdlsoap:operation soapAction=""/>
@@ -427,6 +489,60 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
          </wsdl:input>
 
          <wsdl:output name="getUsernamesResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="privateMsg">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="privateMsgRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="privateMsgResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="grantAdmin">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="grantAdminRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="grantAdminResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="isAdmin">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="isAdminRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="isAdminResponse">
 
             <wsdlsoap:body use="literal"/>
 

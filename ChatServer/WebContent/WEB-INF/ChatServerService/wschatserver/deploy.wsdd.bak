@@ -34,17 +34,23 @@
         <parameter qname="pns:id" xmlns:pns="http://wschatserver" type="tns:int" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
         <parameter qname="pns:message" xmlns:pns="http://wschatserver" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
       </operation>
+      <operation name="getUserCount" qname="operNS:getUserCount" xmlns:operNS="http://wschatserver" returnQName="retNS:getUserCountReturn" xmlns:retNS="http://wschatserver" returnType="rtns:int" xmlns:rtns="http://www.w3.org/2001/XMLSchema" soapAction="" >
+      </operation>
+      <operation name="getUsernames" qname="operNS:getUsernames" xmlns:operNS="http://wschatserver" returnQName="retNS:getUsernamesReturn" xmlns:retNS="http://wschatserver" returnType="rtns:Map" xmlns:rtns="http://xml.apache.org/xml-soap" soapAction="" >
+      </operation>
       <operation name="privateMsg" qname="operNS:privateMsg" xmlns:operNS="http://wschatserver" soapAction="" >
         <parameter qname="pns:id" xmlns:pns="http://wschatserver" type="tns:int" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
         <parameter qname="pns:username" xmlns:pns="http://wschatserver" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
         <parameter qname="pns:receiverUsername" xmlns:pns="http://wschatserver" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
         <parameter qname="pns:message" xmlns:pns="http://wschatserver" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
       </operation>
-      <operation name="getUserCount" qname="operNS:getUserCount" xmlns:operNS="http://wschatserver" returnQName="retNS:getUserCountReturn" xmlns:retNS="http://wschatserver" returnType="rtns:int" xmlns:rtns="http://www.w3.org/2001/XMLSchema" soapAction="" >
+      <operation name="grantAdmin" qname="operNS:grantAdmin" xmlns:operNS="http://wschatserver" soapAction="" >
+        <parameter qname="pns:username" xmlns:pns="http://wschatserver" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
       </operation>
-      <operation name="getUsernames" qname="operNS:getUsernames" xmlns:operNS="http://wschatserver" returnQName="retNS:getUsernamesReturn" xmlns:retNS="http://wschatserver" returnType="rtns:Map" xmlns:rtns="http://xml.apache.org/xml-soap" soapAction="" >
+      <operation name="isAdmin" qname="operNS:isAdmin" xmlns:operNS="http://wschatserver" returnQName="retNS:isAdminReturn" xmlns:retNS="http://wschatserver" returnType="rtns:boolean" xmlns:rtns="http://www.w3.org/2001/XMLSchema" soapAction="" >
+        <parameter qname="pns:username" xmlns:pns="http://wschatserver" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
       </operation>
-      <parameter name="allowedMethods" value="getUsernames privateMsg getUserCount leave talk join listen"/>
+      <parameter name="allowedMethods" value="getUsernames getUserCount privateMsg leave grantAdmin talk join isAdmin listen"/>
 
   </service>
 </deployment>
