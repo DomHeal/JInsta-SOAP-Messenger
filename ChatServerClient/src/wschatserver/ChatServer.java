@@ -8,11 +8,11 @@
 package wschatserver;
 
 public interface ChatServer extends java.rmi.Remote {
-    public int join(int id, java.lang.String username, java.lang.String joinMessage) throws java.rmi.RemoteException;
+    public int join(int id, java.lang.String username) throws java.rmi.RemoteException;
     public java.lang.String listen(int id) throws java.rmi.RemoteException;
-    public void leave(int id, java.lang.String username, java.lang.String leavemessage) throws java.rmi.RemoteException;
+    public void leave(java.lang.String username) throws java.rmi.RemoteException;
     public void talk(int id, java.lang.String message) throws java.rmi.RemoteException;
     public void privateMsg(int id, java.lang.String username, java.lang.String receiverUsername, java.lang.String message) throws java.rmi.RemoteException;
-    public java.util.HashMap getUsernames() throws java.rmi.RemoteException;
     public int getUserCount() throws java.rmi.RemoteException;
+    public java.util.HashMap getUsernames() throws java.rmi.RemoteException;
 }

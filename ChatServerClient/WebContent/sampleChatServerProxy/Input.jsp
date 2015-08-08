@@ -71,10 +71,21 @@ valid = false;
 <TD ALIGN="left"><INPUT TYPE="TEXT" NAME="username24" SIZE=20></TD>
 </TR>
 </TABLE>
+<BR>
+<INPUT TYPE="SUBMIT" VALUE="Invoke">
+<INPUT TYPE="RESET" VALUE="Clear">
+</FORM>
+<%
+break;
+case 26:
+valid = false;
+%>
+<FORM METHOD="POST" ACTION="Result.jsp" TARGET="result">
+<INPUT TYPE="HIDDEN" NAME="method" VALUE="<%=org.eclipse.jst.ws.util.JspUtils.markup(method)%>">
 <TABLE>
 <TR>
-<TD COLSPAN="1" ALIGN="LEFT">joinMessage:</TD>
-<TD ALIGN="left"><INPUT TYPE="TEXT" NAME="joinMessage26" SIZE=20></TD>
+<TD COLSPAN="1" ALIGN="LEFT">id:</TD>
+<TD ALIGN="left"><INPUT TYPE="TEXT" NAME="id29" SIZE=20></TD>
 </TR>
 </TABLE>
 <BR>
@@ -83,7 +94,7 @@ valid = false;
 </FORM>
 <%
 break;
-case 28:
+case 31:
 valid = false;
 %>
 <FORM METHOD="POST" ACTION="Result.jsp" TARGET="result">
@@ -91,36 +102,13 @@ valid = false;
 <TABLE>
 <TR>
 <TD COLSPAN="1" ALIGN="LEFT">id:</TD>
-<TD ALIGN="left"><INPUT TYPE="TEXT" NAME="id31" SIZE=20></TD>
-</TR>
-</TABLE>
-<BR>
-<INPUT TYPE="SUBMIT" VALUE="Invoke">
-<INPUT TYPE="RESET" VALUE="Clear">
-</FORM>
-<%
-break;
-case 33:
-valid = false;
-%>
-<FORM METHOD="POST" ACTION="Result.jsp" TARGET="result">
-<INPUT TYPE="HIDDEN" NAME="method" VALUE="<%=org.eclipse.jst.ws.util.JspUtils.markup(method)%>">
-<TABLE>
-<TR>
-<TD COLSPAN="1" ALIGN="LEFT">id:</TD>
-<TD ALIGN="left"><INPUT TYPE="TEXT" NAME="id36" SIZE=20></TD>
+<TD ALIGN="left"><INPUT TYPE="TEXT" NAME="id34" SIZE=20></TD>
 </TR>
 </TABLE>
 <TABLE>
 <TR>
 <TD COLSPAN="1" ALIGN="LEFT">username:</TD>
-<TD ALIGN="left"><INPUT TYPE="TEXT" NAME="username38" SIZE=20></TD>
-</TR>
-</TABLE>
-<TABLE>
-<TR>
-<TD COLSPAN="1" ALIGN="LEFT">leavemessage:</TD>
-<TD ALIGN="left"><INPUT TYPE="TEXT" NAME="leavemessage40" SIZE=20></TD>
+<TD ALIGN="left"><INPUT TYPE="TEXT" NAME="username36" SIZE=20></TD>
 </TR>
 </TABLE>
 <BR>
@@ -129,7 +117,29 @@ valid = false;
 </FORM>
 <%
 break;
-case 42:
+case 38:
+valid = false;
+%>
+<FORM METHOD="POST" ACTION="Result.jsp" TARGET="result">
+<INPUT TYPE="HIDDEN" NAME="method" VALUE="<%=org.eclipse.jst.ws.util.JspUtils.markup(method)%>">
+<BR>
+<INPUT TYPE="SUBMIT" VALUE="Invoke">
+<INPUT TYPE="RESET" VALUE="Clear">
+</FORM>
+<%
+break;
+case 41:
+valid = false;
+%>
+<FORM METHOD="POST" ACTION="Result.jsp" TARGET="result">
+<INPUT TYPE="HIDDEN" NAME="method" VALUE="<%=org.eclipse.jst.ws.util.JspUtils.markup(method)%>">
+<BR>
+<INPUT TYPE="SUBMIT" VALUE="Invoke">
+<INPUT TYPE="RESET" VALUE="Clear">
+</FORM>
+<%
+break;
+case 46:
 valid = false;
 %>
 <FORM METHOD="POST" ACTION="Result.jsp" TARGET="result">
@@ -137,37 +147,27 @@ valid = false;
 <TABLE>
 <TR>
 <TD COLSPAN="1" ALIGN="LEFT">id:</TD>
-<TD ALIGN="left"><INPUT TYPE="TEXT" NAME="id45" SIZE=20></TD>
+<TD ALIGN="left"><INPUT TYPE="TEXT" NAME="id49" SIZE=20></TD>
+</TR>
+</TABLE>
+<TABLE>
+<TR>
+<TD COLSPAN="1" ALIGN="LEFT">username:</TD>
+<TD ALIGN="left"><INPUT TYPE="TEXT" NAME="username51" SIZE=20></TD>
+</TR>
+</TABLE>
+<TABLE>
+<TR>
+<TD COLSPAN="1" ALIGN="LEFT">receiverUsername:</TD>
+<TD ALIGN="left"><INPUT TYPE="TEXT" NAME="receiverUsername53" SIZE=20></TD>
 </TR>
 </TABLE>
 <TABLE>
 <TR>
 <TD COLSPAN="1" ALIGN="LEFT">message:</TD>
-<TD ALIGN="left"><INPUT TYPE="TEXT" NAME="message47" SIZE=20></TD>
+<TD ALIGN="left"><INPUT TYPE="TEXT" NAME="message55" SIZE=20></TD>
 </TR>
 </TABLE>
-<BR>
-<INPUT TYPE="SUBMIT" VALUE="Invoke">
-<INPUT TYPE="RESET" VALUE="Clear">
-</FORM>
-<%
-break;
-case 49:
-valid = false;
-%>
-<FORM METHOD="POST" ACTION="Result.jsp" TARGET="result">
-<INPUT TYPE="HIDDEN" NAME="method" VALUE="<%=org.eclipse.jst.ws.util.JspUtils.markup(method)%>">
-<BR>
-<INPUT TYPE="SUBMIT" VALUE="Invoke">
-<INPUT TYPE="RESET" VALUE="Clear">
-</FORM>
-<%
-break;
-case 52:
-valid = false;
-%>
-<FORM METHOD="POST" ACTION="Result.jsp" TARGET="result">
-<INPUT TYPE="HIDDEN" NAME="method" VALUE="<%=org.eclipse.jst.ws.util.JspUtils.markup(method)%>">
 <BR>
 <INPUT TYPE="SUBMIT" VALUE="Invoke">
 <INPUT TYPE="RESET" VALUE="Clear">
@@ -187,20 +187,8 @@ valid = false;
 </TABLE>
 <TABLE>
 <TR>
-<TD COLSPAN="1" ALIGN="LEFT">username:</TD>
-<TD ALIGN="left"><INPUT TYPE="TEXT" NAME="username62" SIZE=20></TD>
-</TR>
-</TABLE>
-<TABLE>
-<TR>
-<TD COLSPAN="1" ALIGN="LEFT">receiverUsername:</TD>
-<TD ALIGN="left"><INPUT TYPE="TEXT" NAME="receiverUsername64" SIZE=20></TD>
-</TR>
-</TABLE>
-<TABLE>
-<TR>
 <TD COLSPAN="1" ALIGN="LEFT">message:</TD>
-<TD ALIGN="left"><INPUT TYPE="TEXT" NAME="message66" SIZE=20></TD>
+<TD ALIGN="left"><INPUT TYPE="TEXT" NAME="message62" SIZE=20></TD>
 </TR>
 </TABLE>
 <BR>

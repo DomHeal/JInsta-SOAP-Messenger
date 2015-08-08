@@ -9,6 +9,8 @@ import java.util.HashMap;
 import javax.swing.*;
 import wschatserver.ChatServer;
 import wschatserver.ChatServerServiceLocator;
+import wschatserverAdmin.AdminGUI;
+
 import java.awt.event.*;
 import java.awt.BorderLayout;
 import java.awt.SystemColor;
@@ -32,7 +34,7 @@ public class ChatGUI {
 	private static JTextField usernameText;
 	private JScrollPane myTextScroll;
 	private static ChatListener otherTextThread;
-	private String Message = "";
+	private String messageText = "";
 	private JButton connectBtn;
 	private JButton disconnectBtn;
 	private JPanel topPanel;
@@ -42,8 +44,8 @@ public class ChatGUI {
 	public static final String DISCONNECTED_TITLE = "Chat Client - Disconnected";
 	public static final String CONNECTED_TITLE = "Chat Client - Connected - Users Online: ";
 
-	private static final int HOR_SIZE = 500;
-	private static final int VER_SIZE = 250;
+	private static final int HOR_SIZE = 200;
+	private static final int VER_SIZE = 200;
 
 	private static final int HOR_SIZE_INPUT = 500;
 	private static final int VER_SIZE_INPUT = 50;
@@ -60,9 +62,8 @@ public class ChatGUI {
 	private static DefaultListModel<String> model = new DefaultListModel<String>();
 
 	private final int USERNAME_TAKEN = -1;
-	private final String JOINED_MSG = " has joined!";
-	private final String LEFT_MSG = " has left!";
 	private JTextPane textPane;
+	private JLabel lblAdmin;
 	
 	
 
@@ -82,6 +83,16 @@ public class ChatGUI {
 		topPanel = new JPanel();
 		topPanel.setLayout(new FlowLayout());
 		topPanel.setBackground(COLOR_PURPLE);
+		
+		lblAdmin = new JLabel();
+		lblAdmin.setIcon(new ImageIcon(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/admin.png"))));
+		lblAdmin.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				new AdminGUI();
+			}
+		});
+		topPanel.add(lblAdmin);
 
 		topPanel.add(usernameLbl);
 		topPanel.add(usernameText);
@@ -126,7 +137,7 @@ public class ChatGUI {
 		userList.setForeground(Color.BLACK);
 		westPanel.add(userList);
 
-		frame.setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("icon.png")));
+		frame.setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/icon.png")));
 
 		frame.pack();
 		frame.setVisible(true);
@@ -150,7 +161,7 @@ public class ChatGUI {
 						username = usernameText.getText();
 
 						// Broadcast a user has joined
-						id = service.join(id, username, JOINED_MSG);
+						id = service.join(id, username);
 
 						if (id == USERNAME_TAKEN) {
 							JOptionPane.showMessageDialog(frame, "Username is already Taken!");
@@ -184,7 +195,7 @@ public class ChatGUI {
 			public void actionPerformed(ActionEvent evt) {
 				try {
 					// When disconnected, interrupt Thread
-					service.leave(id, username, LEFT_MSG + "\n");
+					service.leave(username);
 					otherTextThread.terminate();
 					
 					// Make connection null
@@ -203,7 +214,7 @@ public class ChatGUI {
 					myText.setText("");
 					textPane.setText(null);
 					model.clear();
-
+					
 				} catch (Exception ex) {
 					JOptionPane.showMessageDialog(frame, "Unable to connect to server");
 				}
@@ -233,13 +244,13 @@ public class ChatGUI {
 		if (c == '\n') {
 			try {
 				// Gets Message
-				Message = myText.getText();
+				messageText = myText.getText();
 				
 				// Removes unwanted characters
-				Message = Message.replaceAll("[^A-Za-z0-9?!.,/]", "");
+				messageText = messageText.replaceAll("[^A-Za-z0-9?!.,/!£$%^&*-=+_#@ ]", "");
 
 				// if String is Empty, Display Pop-up Message
-				if (Message.isEmpty()) {
+				if (messageText.isEmpty()) {
 					JOptionPane.showMessageDialog(frame, "Enter a message");
 				}
 
@@ -255,11 +266,11 @@ public class ChatGUI {
 
 					else {
 						// Send Private Message
-						service.privateMsg(id, username, receiverUsername, ": " + Message);
+						service.privateMsg(id, username, receiverUsername, ": " + messageText);
 					}
 				} else {
 					// if its not a private message, broadcast to all;
-					service.talk(id, username + ": " + Message);
+					service.talk(id, username + ": " + messageText);
 				}
 				// Once message has sent, input chat box.
 				myText.setText("");
@@ -277,7 +288,7 @@ public class ChatGUI {
 		model.clear();
 		
 		// Add All Users to list
-		model.addElement("All Users");
+		model.addElement("All Users (" + users.size() + ")");
 		
 		// Loop through users
 		for (Object x : users.keySet()) {
@@ -289,6 +300,7 @@ public class ChatGUI {
 
 	private static void addUsers(DefaultListModel<String> model) {
 		userList.setModel(model);
+		userList.setCellRenderer(new ChatList());
 
 	}
 }

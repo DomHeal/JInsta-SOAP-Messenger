@@ -31,11 +31,11 @@ public class ChatListener extends Thread {
 	public static final String CONNECTED_TITLE = "Chat Client - Connected - Users Online: ";
 	private long userCountCurrent;
 	private JFrame frame;
-	private DefaultListModel<String> model = new DefaultListModel<String>();
 	private StyledDocument doc;
-	private JTextPane textPane;
 	private SimpleAttributeSet pmRecieveATT = new SimpleAttributeSet();
 	private SimpleAttributeSet pmSendATT = new SimpleAttributeSet();
+	private boolean run = true;
+	
 	
 
 	ChatListener(JFrame frame, StyledDocument doc, JTextPane textPane, int id, String username, ChatServer service)
@@ -45,13 +45,11 @@ public class ChatListener extends Thread {
 		this.service = service;
 		this.username = username;
 		this.frame = frame;
-		this.textPane = textPane;
-		
-	
+			
 	}
 
 	public void run() {
-		boolean run = true;
+		
 		// while connected to service
 		while (run) {
 			try {
@@ -89,7 +87,7 @@ public class ChatListener extends Thread {
 				try {
 					// if interrupted via disconnect button we broadcast the
 					// disconnect message
-					service.leave(id, username, " has disconnected! \n");
+					service.leave(username);
 				} catch (Exception ex) {
 				}
 				// Remove port / service.
@@ -102,5 +100,10 @@ public class ChatListener extends Thread {
 			}
 		}
 
+	}
+
+	public void terminate() {
+		this.run = false;
+		
 	}
 }

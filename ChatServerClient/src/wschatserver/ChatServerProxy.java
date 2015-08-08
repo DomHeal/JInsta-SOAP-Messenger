@@ -44,10 +44,10 @@ public class ChatServerProxy implements wschatserver.ChatServer {
     return chatServer;
   }
   
-  public int join(int id, java.lang.String username, java.lang.String joinMessage) throws java.rmi.RemoteException{
+  public int join(int id, java.lang.String username) throws java.rmi.RemoteException{
     if (chatServer == null)
       _initChatServerProxy();
-    return chatServer.join(id, username, joinMessage);
+    return chatServer.join(id, username);
   }
   
   public java.lang.String listen(int id) throws java.rmi.RemoteException{
@@ -56,10 +56,10 @@ public class ChatServerProxy implements wschatserver.ChatServer {
     return chatServer.listen(id);
   }
   
-  public void leave(int id, java.lang.String username, java.lang.String leavemessage) throws java.rmi.RemoteException{
+  public void leave(java.lang.String username) throws java.rmi.RemoteException{
     if (chatServer == null)
       _initChatServerProxy();
-    chatServer.leave(id, username, leavemessage);
+    chatServer.leave(username);
   }
   
   public void talk(int id, java.lang.String message) throws java.rmi.RemoteException{
@@ -74,16 +74,16 @@ public class ChatServerProxy implements wschatserver.ChatServer {
     chatServer.privateMsg(id, username, receiverUsername, message);
   }
   
-  public java.util.HashMap getUsernames() throws java.rmi.RemoteException{
-    if (chatServer == null)
-      _initChatServerProxy();
-    return chatServer.getUsernames();
-  }
-  
   public int getUserCount() throws java.rmi.RemoteException{
     if (chatServer == null)
       _initChatServerProxy();
     return chatServer.getUserCount();
+  }
+  
+  public java.util.HashMap getUsernames() throws java.rmi.RemoteException{
+    if (chatServer == null)
+      _initChatServerProxy();
+    return chatServer.getUsernames();
   }
   
   
