@@ -30,3 +30,4 @@ Future Implementations
 ------------------------------------
 - ~~Coloured Messages~~ (Added)
 - ~~Admin Login~~ (Added)
+- Admin Commands (Kick Users)
