@@ -68,12 +68,6 @@ public class ChatServerProxy implements wschatserver.ChatServer {
     chatServer.talk(id, message);
   }
   
-  public void privateMsg(int id, java.lang.String username, java.lang.String receiverUsername, java.lang.String message) throws java.rmi.RemoteException{
-    if (chatServer == null)
-      _initChatServerProxy();
-    chatServer.privateMsg(id, username, receiverUsername, message);
-  }
-  
   public int getUserCount() throws java.rmi.RemoteException{
     if (chatServer == null)
       _initChatServerProxy();
@@ -84,6 +78,24 @@ public class ChatServerProxy implements wschatserver.ChatServer {
     if (chatServer == null)
       _initChatServerProxy();
     return chatServer.getUsernames();
+  }
+  
+  public void privateMsg(int id, java.lang.String username, java.lang.String receiverUsername, java.lang.String message) throws java.rmi.RemoteException{
+    if (chatServer == null)
+      _initChatServerProxy();
+    chatServer.privateMsg(id, username, receiverUsername, message);
+  }
+  
+  public void grantAdmin(java.lang.String username) throws java.rmi.RemoteException{
+    if (chatServer == null)
+      _initChatServerProxy();
+    chatServer.grantAdmin(username);
+  }
+  
+  public boolean isAdmin(java.lang.String username) throws java.rmi.RemoteException{
+    if (chatServer == null)
+      _initChatServerProxy();
+    return chatServer.isAdmin(username);
   }
   
   

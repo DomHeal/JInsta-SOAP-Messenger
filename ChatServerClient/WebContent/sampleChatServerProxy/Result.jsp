@@ -95,29 +95,38 @@ if(listen26mtemp == null){
 break;
 case 31:
         gotMethod = true;
-        String id_4id=  request.getParameter("id34");
-        int id_4idTemp  = Integer.parseInt(id_4id);
-        String username_5id=  request.getParameter("username36");
-            java.lang.String username_5idTemp = null;
-        if(!username_5id.equals("")){
-         username_5idTemp  = username_5id;
+        String username_4id=  request.getParameter("username34");
+            java.lang.String username_4idTemp = null;
+        if(!username_4id.equals("")){
+         username_4idTemp  = username_4id;
         }
-        sampleChatServerProxyid.leave(id_4idTemp,username_5idTemp);
+        sampleChatServerProxyid.leave(username_4idTemp);
 break;
-case 38:
+case 36:
         gotMethod = true;
-        int getUserCount38mtemp = sampleChatServerProxyid.getUserCount();
-        String tempResultreturnp39 = org.eclipse.jst.ws.util.JspUtils.markup(String.valueOf(getUserCount38mtemp));
+        String id_5id=  request.getParameter("id39");
+        int id_5idTemp  = Integer.parseInt(id_5id);
+        String message_6id=  request.getParameter("message41");
+            java.lang.String message_6idTemp = null;
+        if(!message_6id.equals("")){
+         message_6idTemp  = message_6id;
+        }
+        sampleChatServerProxyid.talk(id_5idTemp,message_6idTemp);
+break;
+case 43:
+        gotMethod = true;
+        int getUserCount43mtemp = sampleChatServerProxyid.getUserCount();
+        String tempResultreturnp44 = org.eclipse.jst.ws.util.JspUtils.markup(String.valueOf(getUserCount43mtemp));
         %>
-        <%= tempResultreturnp39 %>
+        <%= tempResultreturnp44 %>
         <%
 break;
-case 41:
+case 46:
         gotMethod = true;
-        java.util.HashMap getUsernames41mtemp = sampleChatServerProxyid.getUsernames();
-if(getUsernames41mtemp == null){
+        java.util.HashMap getUsernames46mtemp = sampleChatServerProxyid.getUsernames();
+if(getUsernames46mtemp == null){
 %>
-<%=getUsernames41mtemp %>
+<%=getUsernames46mtemp %>
 <%
 }else{
 %>
@@ -128,37 +137,48 @@ if(getUsernames41mtemp == null){
 <%
 }
 break;
-case 46:
+case 51:
         gotMethod = true;
-        String id_6id=  request.getParameter("id49");
-        int id_6idTemp  = Integer.parseInt(id_6id);
-        String username_7id=  request.getParameter("username51");
-            java.lang.String username_7idTemp = null;
-        if(!username_7id.equals("")){
-         username_7idTemp  = username_7id;
+        String id_7id=  request.getParameter("id54");
+        int id_7idTemp  = Integer.parseInt(id_7id);
+        String username_8id=  request.getParameter("username56");
+            java.lang.String username_8idTemp = null;
+        if(!username_8id.equals("")){
+         username_8idTemp  = username_8id;
         }
-        String receiverUsername_8id=  request.getParameter("receiverUsername53");
-            java.lang.String receiverUsername_8idTemp = null;
-        if(!receiverUsername_8id.equals("")){
-         receiverUsername_8idTemp  = receiverUsername_8id;
+        String receiverUsername_9id=  request.getParameter("receiverUsername58");
+            java.lang.String receiverUsername_9idTemp = null;
+        if(!receiverUsername_9id.equals("")){
+         receiverUsername_9idTemp  = receiverUsername_9id;
         }
-        String message_9id=  request.getParameter("message55");
-            java.lang.String message_9idTemp = null;
-        if(!message_9id.equals("")){
-         message_9idTemp  = message_9id;
+        String message_10id=  request.getParameter("message60");
+            java.lang.String message_10idTemp = null;
+        if(!message_10id.equals("")){
+         message_10idTemp  = message_10id;
         }
-        sampleChatServerProxyid.privateMsg(id_6idTemp,username_7idTemp,receiverUsername_8idTemp,message_9idTemp);
+        sampleChatServerProxyid.privateMsg(id_7idTemp,username_8idTemp,receiverUsername_9idTemp,message_10idTemp);
 break;
-case 57:
+case 62:
         gotMethod = true;
-        String id_10id=  request.getParameter("id60");
-        int id_10idTemp  = Integer.parseInt(id_10id);
-        String message_11id=  request.getParameter("message62");
-            java.lang.String message_11idTemp = null;
-        if(!message_11id.equals("")){
-         message_11idTemp  = message_11id;
+        String username_11id=  request.getParameter("username65");
+            java.lang.String username_11idTemp = null;
+        if(!username_11id.equals("")){
+         username_11idTemp  = username_11id;
         }
-        sampleChatServerProxyid.talk(id_10idTemp,message_11idTemp);
+        sampleChatServerProxyid.grantAdmin(username_11idTemp);
+break;
+case 67:
+        gotMethod = true;
+        String username_12id=  request.getParameter("username70");
+            java.lang.String username_12idTemp = null;
+        if(!username_12id.equals("")){
+         username_12idTemp  = username_12id;
+        }
+        boolean isAdmin67mtemp = sampleChatServerProxyid.isAdmin(username_12idTemp);
+        String tempResultreturnp68 = org.eclipse.jst.ws.util.JspUtils.markup(String.valueOf(isAdmin67mtemp));
+        %>
+        <%= tempResultreturnp68 %>
+        <%
 break;
 }
 } catch (Exception e) { 

@@ -15,6 +15,8 @@ import java.awt.event.MouseEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.rmi.Remote;
+import java.rmi.RemoteException;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import javax.swing.DefaultListModel;
@@ -66,11 +68,13 @@ public class ChatGUI {
 
 	public static ChatServer service;
 	public static Remote port;
+	public static AdminGUI admin;
 	private int id;
 	private String username;
 	private String receiverUsername;
 	private JPanel westPanel;
 	private static JList<String> userList;
+	private static Object[] adminList;
 	private static DefaultListModel<String> model = new DefaultListModel<String>();
 
 	private final int USERNAME_TAKEN = -1;
@@ -106,7 +110,6 @@ public class ChatGUI {
 			}
 		});
 		topPanel.add(lblAdmin);
-
 		topPanel.add(usernameLbl);
 		topPanel.add(usernameText);
 		topPanel.add(connectBtn);
@@ -115,11 +118,11 @@ public class ChatGUI {
 
 		westPanel = new JPanel();
 		westPanel.setBorder(new TitledBorder(null, "Users", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-		frame.getContentPane().add(westPanel, BorderLayout.WEST);
 		westPanel.setBackground(Color.WHITE);
 		westPanel.setSize(new Dimension(WEST_HOR_SIZE, WEST_VER_SIZE));
 		westPanel.setMinimumSize(new Dimension(WEST_HOR_SIZE, WEST_VER_SIZE));
 		westPanel.setPreferredSize(new Dimension(WEST_HOR_SIZE, WEST_VER_SIZE));
+		frame.getContentPane().add(westPanel, BorderLayout.WEST);
 
 		textPane = new JTextPane();
 		JScrollPane sp = new JScrollPane(textPane);
@@ -128,17 +131,17 @@ public class ChatGUI {
 		textPane.setEditable(false);
 		StyledDocument doc = textPane.getStyledDocument();
 		frame.getContentPane().add(sp, BorderLayout.CENTER);
+		
 		myText = new JTextArea();
 		myText.setLineWrap(true);
-
 		myTextScroll = new JScrollPane(myText);
 		myTextScroll.setViewportBorder(new MatteBorder(5, 5, 5, 5, COLOR_PURPLE));
-		frame.getContentPane().add(myTextScroll, BorderLayout.SOUTH);
 		myTextScroll.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 		myTextScroll.setMaximumSize(new Dimension(HOR_SIZE_INPUT, VER_SIZE_INPUT));
 		myTextScroll.setMinimumSize(new Dimension(HOR_SIZE_INPUT, VER_SIZE_INPUT));
 		myTextScroll.setPreferredSize(new Dimension(HOR_SIZE_INPUT, VER_SIZE_INPUT));
 		myTextScroll.setEnabled(false);
+		frame.getContentPane().add(myTextScroll, BorderLayout.SOUTH);
 
 		myText.addKeyListener(new KeyAdapter() {
 			public void keyTyped(KeyEvent evt) {
@@ -174,11 +177,15 @@ public class ChatGUI {
 
 						// Broadcast a user has joined
 						id = service.join(id, username);
-
+						
 						if (id == USERNAME_TAKEN) {
 							JOptionPane.showMessageDialog(frame, "Username is already Taken!");
 
 						} else {
+							
+							if(admin.isAdmin()){
+								service.grantAdmin(username);
+							}
 							// Starts Threads
 							otherTextThread = new ChatListener(frame, doc, textPane, id, username, service);
 							otherTextThread.start();
@@ -186,7 +193,6 @@ public class ChatGUI {
 							// Displays Connected
 							frame.setTitle(CONNECTED_TITLE + service.getUserCount());
 							userList.setSelectedIndex(0);
-
 	
 							// Enables and Disables buttons for GUI
 							disconnectBtn.setEnabled(true);
@@ -288,14 +294,13 @@ public class ChatGUI {
 				myText.setText("");
 
 			} catch (Exception ie) {
-				System.out.println(ie);
 				myText.setText("");
 				JOptionPane.showMessageDialog(frame, "Failed to send message");
 			}
 		}
 	}
 
-	public static void setUserList(HashMap<String, Integer> users) {
+	public static void setUserList(HashMap<String, Integer> users) throws RemoteException {
 		// Clear List before Creating
 		model.clear();
 		
@@ -313,9 +318,10 @@ public class ChatGUI {
 	/*
 	 * Adds the Model and Cell Graphics
 	 */
-	private static void addUsers(DefaultListModel<String> model) {
+	private static void addUsers(DefaultListModel<String> model) throws RemoteException {
+		
 		userList.setModel(model);
-		userList.setCellRenderer(new ChatList());
+		userList.setCellRenderer(new ChatList(service));
 
 	}
 }

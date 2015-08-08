@@ -98,6 +98,7 @@ public class ChatListener extends Thread {
 				// Breaks While loop - disconnected
 				run = false;
 			} catch (Exception e) {
+				System.out.println(e);
 				JOptionPane.showMessageDialog(frame, "Error reading from server.");
 			}
 		}

@@ -1,41 +1,35 @@
 package wschatserverAdmin;
 
 import java.awt.BorderLayout;
-import java.awt.Dialog;
 import java.awt.FlowLayout;
-
-import javax.swing.JButton;
-import javax.swing.JDialog;
-import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
-import java.awt.GridLayout;
-import java.awt.Image;
-
-import javax.swing.JLabel;
-import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.Toolkit;
-
-import javax.swing.BoxLayout;
-import javax.swing.ImageIcon;
-import javax.swing.JTextField;
-import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JDialog;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
+import javax.swing.border.EmptyBorder;
 
 public class AdminGUI extends JDialog {
 
 	private final JPanel contentPanel = new JPanel();
 	private JTextField textFieldUsername;
 	private JTextField textFieldPassword;
+	private static boolean isAdmin = false;
 
 	/**
 	 * Create the dialog.
 	 */
 	public AdminGUI() {
-		Dialog dialog = this;
 		
-		//setModal(true);
+		setModal(true);
 		setAlwaysOnTop(true);
 		setResizable(false);
 		setIconImage(Toolkit.getDefaultToolkit().getImage(AdminGUI.class.getResource("/images/icon.png")));
@@ -97,7 +91,7 @@ public class AdminGUI extends JDialog {
 		okButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				if (textFieldUsername.getText().equals("admin")) {
-					System.out.println("Admin Granted");
+					grantAdmin(true);
 				}
 				dispose();
 			}
@@ -126,5 +120,13 @@ public class AdminGUI extends JDialog {
 		setLocationRelativeTo(null);
 		setVisible(true);
 		
+	}
+
+	protected void grantAdmin(boolean b) {
+		isAdmin = true;
+	}
+
+	public static boolean isAdmin() {
+		return isAdmin;
 	}
 }
