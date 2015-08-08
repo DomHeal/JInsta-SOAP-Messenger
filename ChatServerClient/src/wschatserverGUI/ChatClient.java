@@ -1,9 +1,11 @@
 package wschatserverGUI;
 
+import javax.swing.SwingUtilities;
+
 public class ChatClient {
     public static void main(String[] args) {
 
-        javax.swing.SwingUtilities.invokeLater(new Runnable() {
+        SwingUtilities.invokeLater(new Runnable() {
         	ChatGUI client = new ChatGUI();
 
             public void run() {

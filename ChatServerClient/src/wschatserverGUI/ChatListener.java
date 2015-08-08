@@ -5,15 +5,11 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.util.HashMap;
 
-import javax.swing.DefaultListModel;
 import javax.swing.JFrame;
-import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextPane;
-import javax.swing.text.MutableAttributeSet;
 import javax.swing.text.SimpleAttributeSet;
-import javax.swing.text.Style;
 import javax.swing.text.StyleConstants;
 import javax.swing.text.StyledDocument;
 
@@ -53,7 +49,10 @@ public class ChatListener extends Thread {
 		// while connected to service
 		while (run) {
 			try {
+				// Store UserCount locally
 				long userCountUpdate = service.getUserCount();
+				
+				// Check if the Usercount has changed
 				if (userCountUpdate != userCountCurrent) {
 					userCountCurrent = userCountUpdate;
 
@@ -64,7 +63,11 @@ public class ChatListener extends Thread {
 					ChatGUI.setUserList(users);
 
 				}
+				
+				// Listen for Messages
 				String newText = service.listen(id);
+				
+				// Check if the Message is a PM
 				if (!newText.equals("")) {
 					if (newText.startsWith("[PM]")){
 						
@@ -79,14 +82,13 @@ public class ChatListener extends Thread {
 					}
 					
 					else{
+						
 						doc.insertString(doc.getLength(), newText + "\n", null );
 					}
 				}
 				Thread.sleep(1000);
 			} catch (InterruptedException x) {
 				try {
-					// if interrupted via disconnect button we broadcast the
-					// disconnect message
 					service.leave(username);
 				} catch (Exception ex) {
 				}

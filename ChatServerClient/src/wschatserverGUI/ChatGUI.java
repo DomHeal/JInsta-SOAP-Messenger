@@ -1,30 +1,42 @@
 package wschatserverGUI;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.rmi.Remote;
 import java.util.HashMap;
 
-import javax.swing.*;
+import javax.swing.DefaultListModel;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JList;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
+import javax.swing.JTextField;
+import javax.swing.JTextPane;
+import javax.swing.ScrollPaneConstants;
+import javax.swing.border.MatteBorder;
+import javax.swing.border.TitledBorder;
+import javax.swing.text.StyledDocument;
+
 import wschatserver.ChatServer;
 import wschatserver.ChatServerServiceLocator;
 import wschatserverAdmin.AdminGUI;
-
-import java.awt.event.*;
-import java.awt.BorderLayout;
-import java.awt.SystemColor;
-import java.awt.Toolkit;
-import java.awt.Font;
-import java.awt.ScrollPane;
-
-import javax.swing.border.TitledBorder;
-import javax.swing.text.BadLocationException;
-import javax.swing.text.StyledDocument;
-
-import com.sun.prism.Image;
-
-import javax.swing.border.MatteBorder;
 
 public class ChatGUI {
 
@@ -44,8 +56,8 @@ public class ChatGUI {
 	public static final String DISCONNECTED_TITLE = "Chat Client - Disconnected";
 	public static final String CONNECTED_TITLE = "Chat Client - Connected - Users Online: ";
 
-	private static final int HOR_SIZE = 200;
-	private static final int VER_SIZE = 200;
+	private static final int WEST_HOR_SIZE = 100;
+	private static final int WEST_VER_SIZE = 200;
 
 	private static final int HOR_SIZE_INPUT = 500;
 	private static final int VER_SIZE_INPUT = 50;
@@ -86,6 +98,7 @@ public class ChatGUI {
 		
 		lblAdmin = new JLabel();
 		lblAdmin.setIcon(new ImageIcon(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/admin.png"))));
+		lblAdmin.setCursor(new Cursor(Cursor.HAND_CURSOR));
 		lblAdmin.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
@@ -104,9 +117,9 @@ public class ChatGUI {
 		westPanel.setBorder(new TitledBorder(null, "Users", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		frame.getContentPane().add(westPanel, BorderLayout.WEST);
 		westPanel.setBackground(Color.WHITE);
-		westPanel.setSize(new Dimension(200, 200));
-		westPanel.setMinimumSize(new Dimension(200, 200));
-		westPanel.setPreferredSize(new Dimension(100, 200));
+		westPanel.setSize(new Dimension(WEST_HOR_SIZE, WEST_VER_SIZE));
+		westPanel.setMinimumSize(new Dimension(WEST_HOR_SIZE, WEST_VER_SIZE));
+		westPanel.setPreferredSize(new Dimension(WEST_HOR_SIZE, WEST_VER_SIZE));
 
 		textPane = new JTextPane();
 		JScrollPane sp = new JScrollPane(textPane);
@@ -255,7 +268,7 @@ public class ChatGUI {
 				}
 
 				// Checking if All Users is Selected and not own username
-				else if ((userList.getSelectedValue() != "All Users") && (userList.getSelectedValue() != null)) {
+				else if ((userList.getSelectedIndex() != 0) && (userList.getSelectedValue() != null)) {
 
 					receiverUsername = userList.getSelectedValue().toString();
 
