@@ -1,11 +1,12 @@
 #JInsta-SOAP-Messenger
 <img src="http://s13.postimg.org/myz803c47/jin.png"/> 
 The application implemented SOAP features with a graphical user interface which users can choose a username and connect to the server. The applications integrated features such as global announcements and private messaging.
-<p align="center">
+
 <h3> New User Interface! </h3>
+<p align="center">
 <img src="http://i.imgur.com/JKfDeL8.png"/>
-</p>
 <img src="http://i.imgur.com/3wPfcUI.png"/>
+</p>
 
 Instructions
 ------------------------------------
