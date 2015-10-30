@@ -3,7 +3,7 @@
 The application implemented SOAP features with a graphical user interface which users can choose a username and connect to the server. The applications integrated features such as global announcements and private messaging.
 <p align="center">
 <h3> New User Interface! </h3>
-<img src="http://i.imgur.com/xhQZbxa.png"/>
+<img src="http://i.imgur.com/JKfDeL8.png"/>
 </p>
 <img src="http://i.imgur.com/3wPfcUI.png"/>
 
