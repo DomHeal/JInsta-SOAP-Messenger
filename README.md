@@ -5,7 +5,8 @@ The application implemented SOAP features with a graphical user interface which 
 <h3> New User Interface! </h3>
 <p align="center">
 <img src="http://i.imgur.com/JKfDeL8.png"/>
-</hr>
+<br>
+<br>
 <img src="http://i.imgur.com/3wPfcUI.png"/>
 </p>
 
