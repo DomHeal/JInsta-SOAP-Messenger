@@ -40,3 +40,12 @@ Future Implementations
 - ~~Maven Integration~~ (Added)
 - Admin Commands (Kick Users)
 - Potential JavaFX Implementation
+
+Change Log
+------------------------------------
+Change Log - 30/10/15
+<ul>
+  <li>New Logo</li>
+  <li>Colour Changes</li>
+  <li>Maven Integration</li>
+</ul>
