@@ -34,5 +34,6 @@ Future Implementations
 ------------------------------------
 - ~~Coloured Messages~~ (Added)
 - ~~Admin Login~~ (Added)
+- ~~Maven Integration~~ (Added)
 - Admin Commands (Kick Users)
 - Potential JavaFX Implementation
